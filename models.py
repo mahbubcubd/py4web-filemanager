@@ -3,6 +3,7 @@ This file defines the database models
 """
 import os
 from .common import db, Field
+from datetime import datetime
 from pydal.validators import *
 
 
@@ -21,6 +22,7 @@ db.define_table('tipo_document',
                 )
 
 db.define_table('documents',
+                Field('user_id', 'reference auth_user'),
                 Field('tipodocument_id', 'reference tipo_document'),
                 Field('title', 'string'),
                 Field('description', 'text'),

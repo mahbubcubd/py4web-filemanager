@@ -1,0 +1,78 @@
+[[extend 'layout.html']]
+
+<style>
+.vars { padding: 5px 20px; text-align: center; }
+.vars th:after { content: ": " }
+.vars th, .vars td, .vars li { padding: 2px 5px; }
+</style>
+
+<h3>[[=msg]]</h3>
+<form action="" enctype="multipart/form-data" method="post">
+    <input name="form_name" type="hidden" value="uploader_form">
+    <div class="column is-half is-offset-one-quarter">
+        <div class="field">
+            <label class="label">Type</label>
+              <div class="control is-expanded">
+                <div class="select is-fullwidth">
+                  <select name="file_type">
+                    <option>Select Type</option>
+                      [[for f in doc:]]
+                    <option value="[[=f.id]]">[[=f.name]]</option>
+                      [[pass]]
+                  </select>
+                </div>
+              </div>
+        </div>
+
+        <div class="field">
+         <label class="label">Name</label>
+          <div class="control">
+            <input class="input" type="text" name="title" placeholder="File Title">
+          </div>
+        </div>
+
+      <div class="field ">
+          <label class="label">Upload File</label>
+          <div class="file has-name is-fullwidth">
+            <label class="file-label">
+              <input class="file-input" type="file" name="user_file">
+              <span class="file-cta">
+                <span class="file-icon">
+                  <i class="fas fa-upload"></i>
+                </span>
+                <span class="file-label">
+                  Upload File
+                </span>
+              </span>
+              <span class="file-name">
+                  choose a file
+              </span>
+            </label>
+          </div>
+        </div>
+
+
+        <div class="field">
+          <label class="label">Description</label>
+          <div class="control">
+            <textarea class="textarea" name="description" placeholder="File Description"></textarea>
+          </div>
+        </div>
+
+        <div class="field">
+         <label class="label">Note</label>
+          <div class="control">
+            <input class="input" type="text" name="note" placeholder="File Title">
+          </div>
+        </div>
+
+        <div class="field is-grouped">
+          <div class="control">
+            <button class="button is-link">Submit</button>
+          </div>
+          <div class="control">
+            <button class="button is-link is-light">Cancel</button>
+          </div>
+        </div>
+    </div>
+</form>

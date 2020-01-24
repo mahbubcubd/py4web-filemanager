@@ -1,10 +1,33 @@
 [[extend 'layout.html']]
 
 <style>
-.vars { padding: 5px 20px; text-align: center; }
-.vars th:after { content: ": " }
-.vars th, .vars td, .vars li { padding: 2px 5px; }
+table td{border: none}
+table .head:hover{background: white!important;}
+table th{border: 1px solid #dbdbdb;}
+
+table tr:hover>td .icon{color: #ff4050
+}
+
 </style>
-
-
-  [[=message]]
+<div class="container">
+  <table class="table is-hoverable is-fullwidth">
+    <tr class="head">
+        <th>File</th>
+        <th>Size</th>
+        <th>Last Modified</th>
+        <th></th>
+    </tr>
+    [[for file in data:]]
+    <tr>
+      <td>[[=file.title]]</td>
+      <td>[[=file.description]]</td>
+      <td>[[=file.note]]</td>
+      <td>
+        <span class="icon">
+          <i class="fa fa-trash"></i>
+        </span>
+      </td>
+    </tr>
+    [[pass]]
+</table>
+</div>

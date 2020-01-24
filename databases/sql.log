@@ -34,3 +34,6 @@ CREATE TABLE "documents"(
     "note" TEXT
 );
 success!
+timestamp: 2020-01-24T03:19:24.750665
+ALTER TABLE "documents" ADD "user_id" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ;
+success!

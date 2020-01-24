@@ -27,18 +27,26 @@ Warning: Fixtures MUST be declared with @action.uses({fixtures}) else your app w
 
 from py4web import action, request, abort, redirect, URL, Field
 from yatl.helpers import A
-from py4web.utils.form import Form,FormStyleBulma
+from py4web.utils.form import Form, FormStyleBulma
 from .common import db, session, T, cache, auth, logger
 
 
 @action("index", method=["GET","POST"])
 @action.uses("manager.html", session, db, T, auth.user)
 def index():
-    form = Form(db.documents,formstyle=FormStyleBulma)
-    if form.accepted:
-        # Do something with form.vars['product_name'] and form.vars['product_quantity']
-        redirect(URL('success'))
-    return dict(message=form)
+    data = db().select(db.documents.ALL)
+    return dict(data=data)
+
+
+@action("upload", method=['GET', 'POST'])
+@action.uses('uploader.html', session, db, T, auth.user)
+def uploader():
+    doc_type = db().select(db.tipo_document.ALL)
+    if request.forms:
+        msg = "Posted"
+    else:
+        msg="Not Posted"
+    return dict(doc=doc_type,msg=msg)
 
 
 @action("success", method="GET")
