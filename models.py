@@ -18,7 +18,7 @@ from pydal.validators import *
 
 db.define_table('tipo_document',
                 Field('name', 'string'),
-                Field('description', 'text')
+                Field('description', 'text'),
                 )
 
 db.define_table('documents',
@@ -26,6 +26,6 @@ db.define_table('documents',
                 Field('tipodocument_id', 'reference tipo_document'),
                 Field('title', 'string'),
                 Field('description', 'text'),
-                Field('file', 'upload'),
+                Field('file', 'upload' ),
                 Field('note', 'text')
                 )

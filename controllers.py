@@ -25,17 +25,23 @@ session, db, T, auth, and tempates are examples of Fixtures.
 Warning: Fixtures MUST be declared with @action.uses({fixtures}) else your app will result in undefined behavior
 """
 
-from py4web import action, request, abort, redirect, URL, Field
-from yatl.helpers import A
+from py4web import action, request
 from py4web.utils.form import Form, FormStyleBulma
 from .common import db, session, T, cache, auth, logger
 
 
-@action("index", method=["GET","POST"])
+@action("index", method=["GET"])
 @action.uses("manager.html", session, db, T, auth.user)
 def index():
-    data = db().select(db.documents.ALL)
-    return dict(data=data)
+    msg=''
+    if request.query:
+        try:
+            db(db.documents.id == int(request.query.get('xid'))).delete()
+            db.commit()
+        except Exception as err:
+            msg = err
+    data = db(db.documents.user_id == auth.get_user()['id']).select(db.documents.ALL)
+    return dict(data=data, msg=msg)
 
 
 @action("upload", method=['GET', 'POST'])
@@ -43,9 +49,25 @@ def index():
 def uploader():
     doc_type = db().select(db.tipo_document.ALL)
     if request.forms:
-        msg = "Posted"
+        file_type = request.forms['file_type']
+        title = request.forms['title']
+        description = request.forms['description']
+        note = request.forms['note']
+        files = db.documents.file.store(request.files.get('user_file').file, request.files.get('user_file').filename)
+        try:
+            id = db.documents.insert(
+                user_id=auth.get_user()['id'],
+                tipodocument_id=file_type,
+                title=title,
+                description=description,
+                note=note,
+                file=files
+            )
+            msg= "Record Number "+ str(id)
+        except Exception as e:
+            msg = "Error: {}".format(e)
     else:
-        msg="Not Posted"
+        msg = "Not Posted"
     return dict(doc=doc_type,msg=msg)
 
 
@@ -54,4 +76,12 @@ def uploader():
 def acknowledgement():
     message="Entry successful"
     data = db().select(db.documents.ALL)
-    return dict(message=message,data=data)
+    return dict(message=message, data=data)
+
+
+@action("tipo_document",method=["GET","POST"])
+@action.uses("tipo.html",session,db,auth.user)
+def tipo():
+    form = Form(db.tipo_document, formstyle=FormStyleBulma)
+    return dict(form=form)
+

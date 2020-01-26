@@ -10,21 +10,23 @@ table tr:hover>td .icon{color: #ff4050
 
 </style>
 <div class="container">
-  <table class="table is-hoverable is-fullwidth">
+<table class="table is-hoverable is-fullwidth">
     <tr class="head">
-        <th>File</th>
-        <th>Size</th>
-        <th>Last Modified</th>
-        <th></th>
+        <th>File Record</th>
+        <th>description</th>
+        <th>Note</th>
+        <th>Action</th>
     </tr>
     [[for file in data:]]
     <tr>
-      <td>[[=file.title]]</td>
+        <td> [[=file.file]]</td>
       <td>[[=file.description]]</td>
       <td>[[=file.note]]</td>
       <td>
         <span class="icon">
-          <i class="fa fa-trash"></i>
+            <a href="[[=URL('index',vars=dict(xid=file.id))]]">
+                <i class="fa fa-trash"></i>
+            </a>
         </span>
       </td>
     </tr>
