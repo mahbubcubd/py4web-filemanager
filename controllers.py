@@ -85,3 +85,4 @@ def tipo():
     form = Form(db.tipo_document, formstyle=FormStyleBulma)
     return dict(form=form)
 
+

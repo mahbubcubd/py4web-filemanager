@@ -17,10 +17,10 @@ DB_URI = "sqlite://storage.db"
 DB_POOL_SIZE = 1
 
 # email settings
-SMTP_SERVER = None
-SMTP_SENDER = "you@example.com"
-SMTP_LOGIN = "username:password"
-SMTP_TLS = False
+SMTP_SERVER = "mail.bipolar.ai:587"
+SMTP_SENDER = "test@bipolar.ai"
+SMTP_LOGIN = "test@bipolar.ai:passwordsecured"
+SMTP_TLS = True
 
 # session settings
 SESSION_TYPE = "cookies"
